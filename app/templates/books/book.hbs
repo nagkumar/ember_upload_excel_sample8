@@ -1,0 +1,84 @@
+This is books page
+
+<!--<div style="display: none;">-->
+<div class="dropzone"
+      id="my-awesome-dropzone">
+    <!--<button type="submit">Submit data and files!</button>-->
+</div>
+<!--</div>-->
+
+<div id="clickArea" class="dz-default dz-message">
+    <span>Drop files here to</span>
+</div>
+
+<!--<div id="preview-template" style="display: none;"></div>-->
+
+<div id="preview-template" style="display: none;">
+    <div class="dz-preview dz-file-preview">
+        <div class="dz-details">
+            <div class="dz-filename"><span data-dz-name></span></div>
+            <div class="dz-size" data-dz-size></div>
+            <img data-dz-thumbnail/>
+        </div>
+        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+        <div class="dz-success-mark"><span>✔</span></div>
+        <div class="dz-error-mark"><span>✘</span></div>
+        <div class="dz-error-message"><span data-dz-errormessage></span></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
+
+// The configuration we've talked about above
+        autoProcessQueue: true,
+        parallelUploads: 1,
+        paramName: "file",
+        maxFiles: 1,
+        acceptedFiles: 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        uploadMultiple: 'false',
+        url: 'http://localhost:3000/upload',
+        clickable: "#clickArea",
+        autoDiscover: false,
+        //previewTemplate: document.querySelector('#preview-template').innerHTML,
+
+// The setting up of the dropzone
+        init: function ()
+        {
+            var myDropzone = this;
+            this.on("maxfilesexceeded", function (file)
+            {
+                this.removeAllFiles();
+                this.addFile(file);
+            });
+
+// First change the button to actually tell Dropzone to process the queue.
+//            this.element.querySelector("button[type=submit]").addEventListener("click", function (e)
+//            {
+//// Make sure that the form isn't actually being sent.
+//                e.preventDefault();
+//                e.stopPropagation();
+//                myDropzone.processQueue();
+//                console.log("I am called..")
+//            });
+
+// Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+// of the sending event because uploadMultiple is set to true.
+            this.on("sendingmultiple", function ()
+            {
+// Gets triggered when the form is actually being sent.
+// Hide the success button or the complete form.
+            });
+            this.on("successmultiple", function (files, response)
+            {
+// Gets triggered when the files have successfully been sent.
+// Redirect user or notify of success.
+            });
+            this.on("errormultiple", function (files, response)
+            {
+// Gets triggered when there was an error sending the files.
+// Maybe show form again, and notify user of error
+            });
+        }
+    }
+</script>
