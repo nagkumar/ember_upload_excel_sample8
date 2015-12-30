@@ -1,25 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>EmberUploadExcelSample8</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>EmberUploadExcelSample8</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{content-for 'head'}}
+  {{content-for 'head'}}
 
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/ember-upload-excel-sample8.css">
+  <link rel="stylesheet" href="assets/vendor.css">
+  <link rel="stylesheet" href="assets/ember-upload-excel-sample8.css">
 
-    {{content-for 'head-footer'}}
-  </head>
-  <body>
-    {{content-for 'body'}}
+  {{content-for 'head-footer'}}
+</head>
+<body>
+{{content-for 'body'}}
 
-    <script src="assets/vendor.js"></script>
-    <script src="assets/ember-upload-excel-sample8.js"></script>
+<script src="assets/vendor.js"></script>
+<script src="assets/ember-upload-excel-sample8.js"></script>
 
-    {{content-for 'body-footer'}}
-  </body>
+{{content-for 'body-footer'}}
+</body>
+
+<script type="text/javascript">
+  Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
+
+// The configuration we've talked about above
+    autoProcessQueue: true,
+    parallelUploads: 1,
+    paramName: "file",
+    maxFiles: 1,
+    acceptedFiles: 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    uploadMultiple: 'false',
+    url: 'http://localhost:3000/upload',
+    clickable: "#clickArea",
+//    autoDiscover: false,
+    //previewTemplate: document.querySelector('#preview-template').innerHTML,
+
+// The setting up of the dropzone
+    init: function ()
+    {
+      var myDropzone = this;
+      this.on("maxfilesexceeded", function (file)
+      {
+        this.removeAllFiles();
+        this.addFile(file);
+      });
+
+// First change the button to actually tell Dropzone to process the queue.
+//            this.element.querySelector("button[type=submit]").addEventListener("click", function (e)
+//            {
+//// Make sure that the form isn't actually being sent.
+//                e.preventDefault();
+//                e.stopPropagation();
+//                myDropzone.processQueue();
+//                console.log("I am called..")
+//            });
+
+// Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+// of the sending event because uploadMultiple is set to true.
+      this.on("sendingmultiple", function ()
+      {
+// Gets triggered when the form is actually being sent.
+// Hide the success button or the complete form.
+      });
+      this.on("successmultiple", function (files, response)
+      {
+// Gets triggered when the files have successfully been sent.
+// Redirect user or notify of success.
+      });
+      this.on("errormultiple", function (files, response)
+      {
+// Gets triggered when there was an error sending the files.
+// Maybe show form again, and notify user of error
+      });
+    }
+  }
+</script>
 </html>
